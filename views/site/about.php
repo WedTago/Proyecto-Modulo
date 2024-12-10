@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-6">
         <FONT SIZE=6><p align="center">Victor Monge</p></FONT>
         <img
-        src="https://i.pinimg.com/736x/e2/1a/13/e21a1323d9b4d0e5d4f0e277b1a051ae.jpg"
+        src="https://media1.tenor.com/m/1IVXamyacuoAAAAd/xenoblade-2-monster-energy.gif"
         width="350px"
         height="350px"
         border="10px"

@@ -1,7 +1,7 @@
 <?php
 use yii\helpers\Html;
 ?>
-<h1>reportes/index</h1>
+<h1>Lista de Reportes</h1>
 
 <div class="card">
 <div class="card-header bg-info text-white">Selecciona un Reporte</div> 

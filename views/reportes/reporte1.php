@@ -1,8 +1,6 @@
 <?php
 /** @var yii\web\View $this */
 ?>
-<h1>reportes/reporte1</h1>
-
 <?php
 
 use yii\helpers\Html;
@@ -24,36 +22,36 @@ $this->title = 'Reporte de Cuartos';
         <!-- Declaramos los campos que seran enviados a nuestro reporte -->
         <div class="row">
             <div class="col-md-4">
-                <?= Html::label('nombre', ['class' => 'form-label']) ?>
+                <?= Html::label('Nombre', ['class' => 'form-label']) ?>
                 <?= Html::textInput('nombre', Yii::$app->request->get('nombre', ''), [
                     'placeholder' => 'Nombre',
                     'class' => 'form-control'
                 ]) ?>
             </div>
             <div class="col-md-4">
-                <?= Html::label('apellido1', ['class' => 'form-label']) ?>
+                <?= Html::label('Apellido1', ['class' => 'form-label']) ?>
                 <?= Html::textInput('nombre', Yii::$app->request->get('apellido1', ''), [
                     'placeholder' => 'Apellido1',
                     'class' => 'form-control'
                 ]) ?>
             </div>
             <div class="col-md-4">
-                <?= Html::label('apellido2', ['class' => 'form-label']) ?>
+                <?= Html::label('Apellido2', ['class' => 'form-label']) ?>
                 <?= Html::textInput('nombre', Yii::$app->request->get('apellido2', ''), [
                     'placeholder' => 'Apellido2',
                     'class' => 'form-control'
                 ]) ?>
             </div>
             <div class="col-md-4">
-                <?= Html::label('fecha_entrada', ['class' => 'form-label']) ?>
-                <?= Html::textInput('nombre', Yii::$app->request->get('fecha_entrada', ''), [
+                <?= Html::label('Fecha de Entrada', ['class' => 'form-label']) ?>
+                <?= Html::textInput('nombre', Yii::$app->request->get('fecha_entrada', ''),['type' => 'date'], [
                     'placeholder' => 'Fecha de Entrada',
                     'class' => 'form-control'
                 ]) ?>
             </div>
             <div class="col-md-4">
-                <?= Html::label('fecha_salida', ['class' => 'form-label']) ?>
-                <?= Html::textInput('nombre', Yii::$app->request->get('fecha_salida', ''), [
+                <?= Html::label('Fecha de Salida', ['class' => 'form-label']) ?>
+                <?= Html::textInput('nombre', Yii::$app->request->get('fecha_salida', ''),['type' => 'date'], [
                     'placeholder' => 'Fecha de Salida',
                     'class' => 'form-control'
                 ]) ?>
@@ -108,7 +106,8 @@ $this->title = 'Reporte de Cuartos';
                         <td><?= Html::encode($reserva['nombre']) ?></td>
                         <td><?= Html::encode($reserva['apellido1']) ?></td>
                         <td><?= Html::encode($reserva['apellido2']) ?></td>
-                        <td><?= Html::encode($reserva['fecha_salida'])-($reserva['fecha_entrada']) ?></td>
+                        <td><?= Html::encode($reserva['fecha_entrada']) ?></td>
+                        <td><?= Html::encode($reserva['fecha_salida']) ?></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

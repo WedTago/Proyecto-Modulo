@@ -15,14 +15,14 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-6">
         <FONT SIZE=6><p align="center">Juan Laborin</p></FONT>
         <img
-        src="https://i.pinimg.com/736x/db/56/31/db56314c67691d80c63e6ecfe4ad2b39.jpg"
+        src="https://media1.tenor.com/m/fQqMwHYUGgoAAAAd/cametek-camellia.gif"
         width="350px"
         height="350px"
         border="10px"
         align="left"
         >
         <p align="center">
-         "Soy un alumno que ahora mismo esta haciendo este texto para ver que tanto puede tener esta columna""alguien vio esto"
+         "Soy un alumno del CBTA #53 que esta haciendo este proyecto para pasar la materia"
         </p>
     </div>
     <div class="col-6">

@@ -11,7 +11,7 @@ class ReportesController extends \yii\web\Controller
 
     public function actionReporte1()
     {
-        $id_reserva = Yii::$app->request->get('R.id_reserva');
+        $id_reserva = Yii::$app->request->get('id_reserva');
         $fecha_entrada = Yii::$app->request->get('R.fecha_entrada');
         $fecha_salida = Yii::$app->request->get('R.fecha_salida');
         $nombre = Yii::$app->request->get('C.nombre');
@@ -20,17 +20,19 @@ class ReportesController extends \yii\web\Controller
 
 
         // Construye la consulta SQL base
-        $sql = "SELECT C.nombre, C.apellido1, C.apellido2, R.fecha_entrada, R.fecha_salida
+        $sql = "SELECT C.nombre, C.apellido1, C.apellido2, DATEDIFF(R.fecha_salida, R.fecha_entrada) AS 'Duracion', SUM(H.Precio*(DATEDIFF(R.fecha_salida, R.fecha_entrada))) AS 'TotalReserva'
                 FROM reservas R
                 INNER JOIN clientes C
                 ON R.id_cliente = C.id_cliente
+                INNER JOIN habitaciones H
+                ON H.num_habitacion = R.num_habitacion
                 WHERE 1=1";
                 // Esta linea siempre es verdadera y permite agregar and de forma dinamica
         // Agrega condiciones de filtro dinámicamente si son mandados
         $params = [];
         if ($id_reserva) {// Si el parametro trae un valor
             $sql .= " AND R.id_reserva = :id_reserva";
-            $params[':id_reserva'] = 'R.id_reserva';
+            $params[':id_reserva'] = $id_reserva;
         }
         // Ejecuta la consulta
         $reservas = Yii::$app->db->createCommand($sql, $params)->queryAll();

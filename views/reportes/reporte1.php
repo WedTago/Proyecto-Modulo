@@ -30,28 +30,28 @@ $this->title = 'Reporte de Cuartos';
             </div>
             <div class="col-md-4">
                 <?= Html::label('Apellido1', ['class' => 'form-label']) ?>
-                <?= Html::textInput('nombre', Yii::$app->request->get('apellido1', ''), [
+                <?= Html::textInput('apellido1', Yii::$app->request->get('apellido1', ''), [
                     'placeholder' => 'Apellido1',
                     'class' => 'form-control'
                 ]) ?>
             </div>
             <div class="col-md-4">
                 <?= Html::label('Apellido2', ['class' => 'form-label']) ?>
-                <?= Html::textInput('nombre', Yii::$app->request->get('apellido2', ''), [
+                <?= Html::textInput('apellido2', Yii::$app->request->get('apellido2', ''), [
                     'placeholder' => 'Apellido2',
                     'class' => 'form-control'
                 ]) ?>
             </div>
             <div class="col-md-4">
                 <?= Html::label('Fecha de Entrada', ['class' => 'form-label']) ?>
-                <?= Html::textInput('nombre', Yii::$app->request->get('fecha_entrada', ''),['type' => 'date'], [
+                <?= Html::textInput('fecha_entrada', Yii::$app->request->get('fecha_entrada', ''),['type' => 'date'], [
                     'placeholder' => 'Fecha de Entrada',
                     'class' => 'form-control'
                 ]) ?>
             </div>
             <div class="col-md-4">
                 <?= Html::label('Fecha de Salida', ['class' => 'form-label']) ?>
-                <?= Html::textInput('nombre', Yii::$app->request->get('fecha_salida', ''),['type' => 'date'], [
+                <?= Html::textInput('fecha_salidas', Yii::$app->request->get('fecha_salida', ''),['type' => 'date'], [
                     'placeholder' => 'Fecha de Salida',
                     'class' => 'form-control'
                 ]) ?>

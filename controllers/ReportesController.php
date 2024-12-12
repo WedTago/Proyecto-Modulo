@@ -20,7 +20,7 @@ class ReportesController extends \yii\web\Controller
 
 
         // Construye la consulta SQL base
-        $sql = "SELECT C.nombre, C.apellido1, C.apellido2, DATEDIFF(R.fecha_salida,R.fecha_entrada) AS 'Dias'
+        $sql = "SELECT C.nombre, C.apellido1, C.apellido2, R.fecha_entrada, R.fecha_salida
                 FROM reservas R
                 INNER JOIN clientes C
                 ON R.id_cliente = C.id_cliente
@@ -29,15 +29,15 @@ class ReportesController extends \yii\web\Controller
         // Agrega condiciones de filtro dinámicamente si son mandados
         $params = [];
         if ($id_reserva) {// Si el parametro trae un valor
-            $sql .= " R.id_reserva = :id_reserva";
-            $params[':id_reserva'] = "id_reserva";
+            $sql .= " AND R.id_reserva = :id_reserva";
+            $params[':id_reserva'] = 'R.id_reserva';
         }
         // Ejecuta la consulta
         $reservas = Yii::$app->db->createCommand($sql, $params)->queryAll();
 
         //Mandamos a la vista el conjunto de registros retornados en la variable $empleados
         return $this->render('reporte1', [
-            'alumnos' => $reservas,
+            'reservas' => $reservas,
         ]);
         return $this->render('reporte1');
     }

@@ -24,25 +24,53 @@ $this->title = 'Reporte de Cuartos';
         <!-- Declaramos los campos que seran enviados a nuestro reporte -->
         <div class="row">
             <div class="col-md-4">
-                <?= Html::label('Num_habitacion', 'nombre', ['class' => 'form-label']) ?>
+                <?= Html::label('nombre', ['class' => 'form-label']) ?>
                 <?= Html::textInput('nombre', Yii::$app->request->get('nombre', ''), [
                     'placeholder' => 'Nombre',
                     'class' => 'form-control'
                 ]) ?>
             </div>
+            <div class="col-md-4">
+                <?= Html::label('apellido1', ['class' => 'form-label']) ?>
+                <?= Html::textInput('nombre', Yii::$app->request->get('apellido1', ''), [
+                    'placeholder' => 'Apellido1',
+                    'class' => 'form-control'
+                ]) ?>
+            </div>
+            <div class="col-md-4">
+                <?= Html::label('apellido2', ['class' => 'form-label']) ?>
+                <?= Html::textInput('nombre', Yii::$app->request->get('apellido2', ''), [
+                    'placeholder' => 'Apellido2',
+                    'class' => 'form-control'
+                ]) ?>
+            </div>
+            <div class="col-md-4">
+                <?= Html::label('fecha_entrada', ['class' => 'form-label']) ?>
+                <?= Html::textInput('nombre', Yii::$app->request->get('fecha_entrada', ''), [
+                    'placeholder' => 'Fecha de Entrada',
+                    'class' => 'form-control'
+                ]) ?>
+            </div>
+            <div class="col-md-4">
+                <?= Html::label('fecha_salida', ['class' => 'form-label']) ?>
+                <?= Html::textInput('nombre', Yii::$app->request->get('fecha_salida', ''), [
+                    'placeholder' => 'Fecha de Salida',
+                    'class' => 'form-control'
+                ]) ?>
+            </div>
 
             <div class="col-md-4">
-                <?= Html::label('Comunidad', 'comunidad_id', ['class' => 'form-label']) ?>
-                <select name="comunidad_id" class="form-control">
-                    <option value="">Selecciona una comunidad</option>
+                <?= Html::label('#Reserva', 'id_reserva', ['class' => 'form-label']) ?>
+                <select name="id_reserva" class="form-control">
+                    <option value="">Selecciona un #Reserva</option>
                     <?php
                     // Hacemos un consulta a la DB apra meter los departamentos en una lista desplegable
-                    $comunidades = Yii::$app->db->createCommand("SELECT id, nombre FROM comunidades")->queryAll();
+                    $Num_reserva = Yii::$app->db->createCommand("SELECT id_reserva FROM reservas")->queryAll();
 
                     // Recorremos los departamentos encontrados y los  acomodamos en un option
-                    foreach ($comunidades as $comunidad) {
-                        $selected = (Yii::$app->request->get('codigo_departamento') == $comunidad['id']) ? 'selected' : '';
-                        echo "<option value='{$comunidad['id']}' $selected>{$comunidad['nombre']}</option>";
+                    foreach ($Num_reserva as $id_reserva) {
+                        $selected = (Yii::$app->request->get('id_reserva') == $id_reserva['id_reserva']) ? 'selected' : '';
+                        echo "<option value='{$id_reserva['id_reserva']}' $selected>{$id_reserva['id_reserva']}</option>";
                     }
                     ?>
                 </select>
@@ -60,31 +88,27 @@ $this->title = 'Reporte de Cuartos';
 </div>
 
 <!-- Si encontramos registros los metemos en una tabla html para ser mostrados, se envian desde la linea 41 -->
-<?php if (!empty($alumnos)): ?>
+<?php if (!empty($reservas)): ?>
     <h2 class="mb-3">Resultados del Reporte</h2>
     <div class="table-responsive">
         <table class="table table-bordered table-striped table-hover">
             <thead class="bg-info text-white">
                 <tr>
-                    <th scope="col">Id</th>
                     <th scope="col">Nombre</th>
-                    <th scope="col">Apellido</th>
-                    <th scope="col">Correo</th>
-                    <th scope="col">Edad</th>
-                    <th scope="col">Comunidad</th>
+                    <th scope="col">Apellido1</th>
+                    <th scope="col">Apellido2</th>
+                    <th scope="col">Duracion</th>
                 </tr>
             </thead>
             <tbody>
                 <!-- Recorremos cada registro y lo metemos en la celdas de la tabla -->
-                <?php foreach ($alumnos as $alumno): ?>
+                <?php foreach ($reservas as $reserva): ?>
                     <tr class="table-light">
                         <!-- Cada campo debe councidir con la consulta SQL que realizamos previamente -->
-                        <td><?= Html::encode($alumno['id']) ?></td>
-                        <td><?= Html::encode($alumno['nombre']) ?></td>
-                        <td><?= Html::encode($alumno['apellido']) ?></td>
-                        <td><?= Html::encode($alumno['email']) ?></td>
-                        <td><?= Html::encode($alumno['edad']) ?></td>
-                        <td><?= Html::encode($alumno['comunidad']) ?></td>
+                        <td><?= Html::encode($reserva['nombre']) ?></td>
+                        <td><?= Html::encode($reserva['apellido1']) ?></td>
+                        <td><?= Html::encode($reserva['apellido2']) ?></td>
+                        <td><?= Html::encode($reserva['fecha_salida'])-($reserva['fecha_entrada']) ?></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

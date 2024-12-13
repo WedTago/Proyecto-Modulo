@@ -22,42 +22,6 @@ $this->title = 'Reporte de Cuartos';
         <!-- Declaramos los campos que seran enviados a nuestro reporte -->
         <div class="row">
             <div class="col-md-4">
-                <?= Html::label('Nombre', ['class' => 'form-label']) ?>
-                <?= Html::textInput('nombre', Yii::$app->request->get('nombre', ''), [
-                    'placeholder' => 'Nombre',
-                    'class' => 'form-control'
-                ]) ?>
-            </div>
-            <div class="col-md-4">
-                <?= Html::label('Apellido1', ['class' => 'form-label']) ?>
-                <?= Html::textInput('apellido1', Yii::$app->request->get('apellido1', ''), [
-                    'placeholder' => 'Apellido1',
-                    'class' => 'form-control'
-                ]) ?>
-            </div>
-            <div class="col-md-4">
-                <?= Html::label('Apellido2', ['class' => 'form-label']) ?>
-                <?= Html::textInput('apellido2', Yii::$app->request->get('apellido2', ''), [
-                    'placeholder' => 'Apellido2',
-                    'class' => 'form-control'
-                ]) ?>
-            </div>
-            <div class="col-md-4">
-                <?= Html::label('Fecha de Entrada', ['class' => 'form-label']) ?>
-                <?= Html::textInput('fecha_entrada', Yii::$app->request->get('fecha_entrada', ''),['type' => 'date'], [
-                    'placeholder' => 'Fecha de Entrada',
-                    'class' => 'form-control'
-                ]) ?>
-            </div>
-            <div class="col-md-4">
-                <?= Html::label('Fecha de Salida', ['class' => 'form-label']) ?>
-                <?= Html::textInput('fecha_salidas', Yii::$app->request->get('fecha_salida', ''),['type' => 'date'], [
-                    'placeholder' => 'Fecha de Salida',
-                    'class' => 'form-control'
-                ]) ?>
-            </div>
-
-            <div class="col-md-4">
                 <?= Html::label('#Reserva', 'id_reserva', ['class' => 'form-label']) ?>
                 <select name="id_reserva" class="form-control">
                     <option value="">Selecciona un #Reserva</option>
@@ -95,7 +59,7 @@ $this->title = 'Reporte de Cuartos';
                     <th scope="col">Nombre</th>
                     <th scope="col">Apellido1</th>
                     <th scope="col">Apellido2</th>
-                    <th scope="col">Duracion</th>
+                    <th scope="col">CostoTotal</th>
                 </tr>
             </thead>
             <tbody>
@@ -106,8 +70,7 @@ $this->title = 'Reporte de Cuartos';
                         <td><?= Html::encode($reserva['nombre']) ?></td>
                         <td><?= Html::encode($reserva['apellido1']) ?></td>
                         <td><?= Html::encode($reserva['apellido2']) ?></td>
-                        <td><?= Html::encode($reserva['fecha_entrada']) ?></td>
-                        <td><?= Html::encode($reserva['fecha_salida']) ?></td>
+                        <td><?= Html::encode($reserva['CostoTotal']) ?></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

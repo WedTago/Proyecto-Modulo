@@ -6,6 +6,7 @@ use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+
 /** @var yii\web\View $this */
 /** @var app\models\FacturasSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
@@ -15,18 +16,18 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="facturas-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1 class="text-center"><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Create Facturas', ['create'], ['class' => 'btn btn-success']) ?>
+    <p class="text-right">
+        <?= Html::a('Crear Facturas', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'tableOptions' => ['class' => 'table table-bordered table-striped table-hover'],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
@@ -39,7 +40,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Facturas $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id_factura' => $model->id_factura]);
-                 }
+                },
+                'header' => 'Acciones',
+                'template' => '{view} {update} {delete}',
             ],
         ],
     ]); ?>
@@ -47,3 +50,4 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php Pjax::end(); ?>
 
 </div>
+

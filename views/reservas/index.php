@@ -6,6 +6,7 @@ use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+
 /** @var yii\web\View $this */
 /** @var app\models\ReservasSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
@@ -15,18 +16,18 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="reservas-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1 class="text-center"><?= Html::encode($this->title) ?></h1>
 
-    <p>
+    <p class="text-right">
         <?= Html::a('Crear Reservas', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'tableOptions' => ['class' => 'table table-bordered table-striped table-hover'],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
@@ -40,7 +41,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Reservas $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id_reserva' => $model->id_reserva]);
-                 }
+                },
+                'header' => 'Acciones',
+                'template' => '{view} {update} {delete}',
             ],
         ],
     ]); ?>
@@ -48,3 +51,4 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php Pjax::end(); ?>
 
 </div>
+

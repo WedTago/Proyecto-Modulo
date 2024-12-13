@@ -1,4 +1,4 @@
 <p align="center">
-    <h1 align="center">Esto es de Juan</h1>
+    <h1 align="center">We are</h1>
     <br>
 </p>

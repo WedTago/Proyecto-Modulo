@@ -34,6 +34,21 @@ class ReportesController extends Controller
                 INNER JOIN clientes C ON R.id_cliente = C.id_cliente
                 INNER JOIN habitaciones H ON H.num_habitacion = R.num_habitacion
                 LEFT JOIN facturas F ON F.id_reserva = R.id_reserva
+                
+        $fecha_entrada = Yii::$app->request->get('R.fecha_entrada');
+        $fecha_salida = Yii::$app->request->get('R.fecha_salida');
+        $nombre = Yii::$app->request->get('C.nombre');
+        $apellido1 = Yii::$app->request->get('C.apellido1');
+        $apellido2 = Yii::$app->request->get('C.apellido2');
+
+
+        // Construye la consulta SQL base
+        $sql = "SELECT C.nombre, C.apellido1, C.apellido2, DATEDIFF(R.fecha_salida, R.fecha_entrada) AS 'Duracion', SUM(H.Precio*(DATEDIFF(R.fecha_salida, R.fecha_entrada))) AS 'TotalReserva'
+                FROM reservas R
+                INNER JOIN clientes C
+                ON R.id_cliente = C.id_cliente
+                INNER JOIN habitaciones H
+                ON H.num_habitacion = R.num_habitacion
                 WHERE 1=1";
 
         $params = [];

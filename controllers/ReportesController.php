@@ -21,8 +21,7 @@ class ReportesController extends \yii\web\Controller
                 INNER JOIN habitaciones H
                 ON H.num_habitacion = R.num_habitacion
                 WHERE 1=1";
-                // Esta linea siempre es verdadera y permite agregar and de forma dinamica
-        // Agrega condiciones de filtro dinámicamente si son mandados
+
         $params = [];
         if ($id_reserva) {// Si el parametro trae un valor
             $sql .= " AND R.id_reserva = :id_reserva";
@@ -43,30 +42,29 @@ class ReportesController extends \yii\web\Controller
         $fecha_entrada = Yii::$app->request->get('fecha_entrada');
         $fecha_salida = Yii::$app->request->get('fecha_salida');
 
-        $sql = "SELECT H.habitacion_numero AS 'disponible'
+        $sql = "SELECT H.num_habitacion AS 'disponible'
             FROM habitaciones H
-            WHERE NOT EXISTS (
-            SELECT NULL
+            WHERE NOT EXISTS ( 
+            SELECT NULL 
             FROM reservas R
-        WHERE ";
+            WHERE 1=1
+            AND ";
 
         $params = [];
-        if ($fecha_entrada) {// Si el parametro trae un valor
-            $sql .= " AND :fecha_entrada <= :fecha_salida";
-            $params[':fecha_entrada'] = $fecha_entrada;
-            $params[':fecha_salida'] = $fecha_entrada;
+        if ($fecha_entrada) {
+            $sql .= " AND R.fecha_entrada <= :fecha_salida";
+            $params[':fecha_salida'] = $fecha_salida;
         }
 
         $params = [];
-        if ($fecha_salida) {// Si el parametro trae un valor
-            $sql .= " AND :fecha_salida >= :fecha_entrada)";
+        if ($fecha_salida) {
+            $sql .= " AND :fecha_salida >= R.fecha_entrada)";
             $params[':fecha_entrada'] = $fecha_entrada;
-            $params[':fecha_salida'] = $fecha_entrada;
         }
 
-        $sql .= " ORDER BY .num_habitacion";
+        $sql .= " ORDER BY H.num_habitacion";
 
-        $fechas = Yii::$app->db->createCommand($sql)->queryAll();
+        $fechas = Yii::$app->db->createCommand($sql, $params)->queryAll();
 
         return $this->render('reporte2', [
             'fechas' => $fechas,
@@ -76,6 +74,25 @@ class ReportesController extends \yii\web\Controller
 
     public function actionReporte3()
     {
+        $num_habitacion = Yii::$app->request->get('num_habitacion');
+
+        $sql = "SELECT SUMCOUNT(R.num_habitacion)
+                FROM reservas R
+                WHERE 1=1";
+
+        $params = [];
+        if ($num_habitacion) {
+            $sql .= " AND R.num_habitacion = :num_habitacion";
+            $params[':num_habitacion'] = $num_habitacion;
+        }
+
+        // Ejecuta la consulta
+        $popular = Yii::$app->db->createCommand($sql, $params)->queryAll();
+
+        //Mandamos a la vista el conjunto de registros retornados en la variable $empleados
+        return $this->render('reporte3', [
+            'alumnos' => $alumnos,
+        ]);
         return $this->render('reporte3');
     }
 

@@ -40,11 +40,7 @@ $this->title = 'Reporte de Popularidad de Habitaciones';
                     <th scope="col">Total Reservas</th>
                     <th scope="col">Total Noches</th>
                     <th scope="col">Promedio Noches</th>
-                    <th scope="col">Mín. Noches</th>
-                    <th scope="col">Máx. Noches</th>
                     <th scope="col">Clientes Distintos</th>
-                    <th scope="col">Ingresos Totales</th>
-                    <th scope="col">Ingreso Promedio</th>
                 </tr>
             </thead>
             <tbody>
@@ -56,11 +52,7 @@ $this->title = 'Reporte de Popularidad de Habitaciones';
                         <td><?= Html::encode($estadistica['total_reservas']) ?></td>
                         <td><?= Html::encode($estadistica['total_noches']) ?></td>
                         <td><?= Html::encode($estadistica['promedio_noches']) ?></td>
-                        <td><?= Html::encode($estadistica['min_noches']) ?></td>
-                        <td><?= Html::encode($estadistica['max_noches']) ?></td>
                         <td><?= Html::encode($estadistica['clientes_distintos']) ?></td>
-                        <td>$<?= Html::encode(number_format($estadistica['ingresos_totales'], 2)) ?></td>
-                        <td>$<?= Html::encode(number_format($estadistica['ingreso_promedio_reserva'], 2)) ?></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

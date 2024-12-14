@@ -14,16 +14,16 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-md-6 text-center">
             <h2>Juan Laborin</h2>
             <img
-                src="https://media1.tenor.com/m/fQqMwHYUGgoAAAAd/cametek-camellia.gif"
+                src="https://media.tenor.com/d13jPFfU24YAAAAi/maxwell-christmas.gif"
                 width="350px"
                 height="350px"
                 class="rounded-circle mb-3"
                 alt="Juan Laborin"
             >
             <p>
-                "Soy un alumno del CBTA #53 que esta haciendo este proyecto para pasar la materia"
+                "Soy un alumno del CBTA #53 que esta haciendo este proyecto para pasar la materia y de paso aprender un poco del mundo de la programacion, el cual es curioso"
             </p>
-            <p><i>-Laborin</i></p>
+            <p><i>- Juan Laborin</i></p>
         </div>
         <div class="col-md-6 text-center">
             <h2>Victor Monge</h2>

@@ -10,51 +10,82 @@ class ReportesController extends Controller
         return $this->render('index');
     }
 
-    /**
-     * Reporte 1: Calcula el costo total de las reservaciones por cliente
-     */
     public function actionReporte1()
-    {
-        $id_reserva = Yii::$app->request->get('id_reserva');
+{
+    $id_reserva = Yii::$app->request->get('id_reserva');
+    $nombre_cliente = Yii::$app->request->get('nombre_cliente');
+    $costo_min = Yii::$app->request->get('costo_min');
+    $costo_max = Yii::$app->request->get('costo_max');
+    $estatus_pago = Yii::$app->request->get('estatus_pago');
+    $ordenar_por = Yii::$app->request->get('ordenar_por', 'fecha_entrada');
+    $direccion_orden = Yii::$app->request->get('direccion_orden', 'DESC');
 
-        // Construye la consulta SQL base
-        $sql = "SELECT 
-                    C.nombre,
-                    C.apellido1,
-                    C.apellido2,
-                    R.id_reserva,
-                    R.fecha_entrada,
-                    R.fecha_salida,
-                    H.tipo as tipo_habitacion,
-                    CAST(H.precio AS DECIMAL(10,2)) as precio_por_noche,
-                    DATEDIFF(R.fecha_salida, R.fecha_entrada) as noches,
-                    CAST(H.precio * DATEDIFF(R.fecha_salida, R.fecha_entrada) AS DECIMAL(10,2)) AS costo_total,
-                    F.estatus_pago
-                FROM reservas R
-                INNER JOIN clientes C ON R.id_cliente = C.id_cliente
-                INNER JOIN habitaciones H ON H.num_habitacion = R.num_habitacion
-                LEFT JOIN facturas F ON F.id_reserva = R.id_reserva
-                WHERE 1=1";
+    $sql = "SELECT 
+                C.nombre,
+                C.apellido1,
+                C.apellido2,
+                R.id_reserva,
+                R.fecha_entrada,
+                R.fecha_salida,
+                H.tipo as tipo_habitacion,
+                CAST(H.precio AS DECIMAL(10,2)) as precio_por_noche,
+                DATEDIFF(R.fecha_salida, R.fecha_entrada) as noches,
+                CAST(H.precio * DATEDIFF(R.fecha_salida, R.fecha_entrada) AS DECIMAL(10,2)) AS costo_total,
+                F.estatus_pago
+            FROM reservas R
+            INNER JOIN clientes C ON R.id_cliente = C.id_cliente
+            INNER JOIN habitaciones H ON H.num_habitacion = R.num_habitacion
+            LEFT JOIN facturas F ON F.id_reserva = R.id_reserva
+            WHERE 1=1";
 
-        $params = [];
-        if ($id_reserva) {
-            $sql .= " AND R.id_reserva = :id_reserva";
-            $params[':id_reserva'] = $id_reserva;
-        }
+    $params = [];
 
-        $sql .= " ORDER BY R.fecha_entrada DESC";
-
-        // Ejecuta la consulta
-        $reservas = Yii::$app->db->createCommand($sql, $params)->queryAll();
-
-        return $this->render('reporte1', [
-            'reservas' => $reservas,
-        ]);
+    if ($id_reserva) {
+        $sql .= " AND R.id_reserva = :id_reserva";
+        $params[':id_reserva'] = $id_reserva;
     }
 
-    /**
-     * Reporte 2: Muestra las habitaciones disponibles en un rango de fechas
-     */
+    if ($nombre_cliente) {
+        $sql .= " AND (C.nombre LIKE :nombre_cliente OR 
+                       C.apellido1 LIKE :nombre_cliente OR 
+                       C.apellido2 LIKE :nombre_cliente)";
+        $params[':nombre_cliente'] = "%{$nombre_cliente}%";
+    }
+
+    if ($costo_min !== null && $costo_min !== '') {
+        $sql .= " AND (H.precio * DATEDIFF(R.fecha_salida, R.fecha_entrada)) >= :costo_min";
+        $params[':costo_min'] = $costo_min;
+    }
+
+    if ($costo_max !== null && $costo_max !== '') {
+        $sql .= " AND (H.precio * DATEDIFF(R.fecha_salida, R.fecha_entrada)) <= :costo_max";
+        $params[':costo_max'] = $costo_max;
+    }
+
+    if ($estatus_pago !== null && $estatus_pago !== '') {
+        $sql .= " AND F.estatus_pago = :estatus_pago";
+        $params[':estatus_pago'] = $estatus_pago;
+    }
+
+    $allowed_order_fields = [
+        'id_reserva' => 'R.id_reserva',
+        'costo_total' => 'costo_total',
+        'fecha_entrada' => 'R.fecha_entrada',
+        'noches' => 'noches'
+    ];
+
+    $order_field = $allowed_order_fields[$ordenar_por] ?? 'R.fecha_entrada';
+    $order_direction = in_array(strtoupper($direccion_orden), ['ASC', 'DESC']) ? $direccion_orden : 'DESC';
+
+    $sql .= " ORDER BY {$order_field} {$order_direction}";
+
+    $reservas = Yii::$app->db->createCommand($sql, $params)->queryAll();
+
+    return $this->render('reporte1', [
+        'reservas' => $reservas,
+    ]);
+}
+
     public function actionReporte2()
     {
         $fecha_entrada = Yii::$app->request->get('fecha_entrada');
@@ -89,10 +120,6 @@ class ReportesController extends Controller
             'habitaciones' => $habitaciones,
         ]);
     }
-
-    /**
-     * Reporte 3: Análisis de popularidad de habitaciones
-     */
     public function actionReporte3()
     {
         $num_habitacion = Yii::$app->request->get('num_habitacion');

@@ -1,5 +1,5 @@
 -- Volcando estructura de base de datos para hotel
-CREATE DATABASE IF NOT EXISTS `hotel` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
+CREATE DATABASE IF NOT EXISTS `hotel`;
 USE `hotel`;
 
 -- Volcando estructura para tabla hotel.clientes
@@ -11,9 +11,8 @@ CREATE TABLE IF NOT EXISTS `clientes` (
   `apellido1` varchar(15) NOT NULL,
   `apellido2` varchar(15) DEFAULT NULL,
   `correo` varchar(40) DEFAULT NULL,
-  PRIMARY KEY (`id_cliente`),
-  UNIQUE KEY `rfc` (`rfc`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  PRIMARY KEY (`id_cliente`)
+);
 
 -- Insercion de datos en tabla clientes
 
@@ -47,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `habitaciones` (
   `precio` decimal(6,2) NOT NULL,
   `disponibilidad` tinyint(1) NOT NULL,
   PRIMARY KEY (`num_habitacion`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+);
 
 -- Volcando datos para la tabla hotel.habitaciones: ~21 rows (aproximadamente)
 INSERT INTO `habitaciones` (`num_habitacion`, `tipo`, `precio`, `disponibilidad`) VALUES
@@ -86,32 +85,31 @@ CREATE TABLE IF NOT EXISTS `reservas` (
   KEY `num_habitacion` (`num_habitacion`),
   CONSTRAINT `reservas_ibfk_1` FOREIGN KEY (`id_cliente`) REFERENCES `clientes` (`id_cliente`),
   CONSTRAINT `reservas_ibfk_2` FOREIGN KEY (`num_habitacion`) REFERENCES `habitaciones` (`num_habitacion`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+);
 
 -- Insercion de datos en tabla reservas
 INSERT INTO `reservas` (`id_reserva`, `id_cliente`, `num_habitacion`, `fecha_entrada`, `fecha_salida`, `estado`) VALUES
-(1, 1, 1, '2024-12-01', '2024-12-05', 'A'),
-(2, 2, 2, '2024-12-03', '2024-12-07', 'C'),
-(3, 3, 3, '2024-11-28', '2024-12-02', 'C'),
-(4, 4, 4, '2024-12-10', '2024-12-15', 'A'),
-(5, 5, 5, '2024-12-05', '2024-12-10', 'C'),
-(6, 6, 6, '2024-12-06', '2024-12-10', 'A'),
-(7, 7, 7, '2024-12-08', '2024-12-12', 'C'),
-(8, 8, 8, '2024-12-09', '2024-12-14', 'A'),
-(9, 9, 9, '2024-12-11', '2024-12-16', 'C'),
-(10, 10, 10, '2024-12-12', '2024-12-15', 'A'),
-(11, 11, 11, '2024-12-13', '2024-12-18', 'C'),
-(12, 12, 12, '2024-12-14', '2024-12-19', 'A'),
-(13, 13, 13, '2024-12-15', '2024-12-20', 'C'),
-(14, 14, 14, '2024-12-16', '2024-12-21', 'A'),
-(15, 15, 15, '2024-12-17', '2024-12-22', 'C'),
-(16, 16, 16, '2024-12-18', '2024-12-23', 'A'),
-(17, 17, 17, '2024-12-19', '2024-12-24', 'C'),
-(18, 18, 18, '2024-12-20', '2024-12-25', 'A'),
-(19, 19, 19, '2024-12-21', '2024-12-26', 'C'),
-(20, 20, 20, '2024-12-22', '2024-12-27', 'A'),
-(21, 21, 21, '2024-12-23', '2024-12-28', 'C');
-
+(1, 1, 1, '2024-12-01', '2024-12-05', '1'),
+(2, 2, 2, '2024-12-03', '2024-12-07', '0'),
+(3, 3, 3, '2024-11-28', '2024-12-02', '1'),
+(4, 4, 4, '2024-12-10', '2024-12-15', '1'),
+(5, 5, 5, '2024-12-05', '2024-12-10', '0'),
+(6, 6, 6, '2024-12-06', '2024-12-10', '0'),
+(7, 7, 7, '2024-12-08', '2024-12-12', '1'),
+(8, 8, 8, '2024-12-09', '2024-12-14', '1'),
+(9, 9, 9, '2024-12-11', '2024-12-16', '0'),
+(10, 10, 10, '2024-12-12', '2024-12-15', '1'),
+(11, 11, 11, '2024-12-13', '2024-12-18', '0'),
+(12, 12, 12, '2024-12-14', '2024-12-19', '0'),
+(13, 13, 13, '2024-12-15', '2024-12-20', '1'),
+(14, 14, 14, '2024-12-16', '2024-12-21', '0'),
+(15, 15, 15, '2024-12-17', '2024-12-22', '1'),
+(16, 16, 16, '2024-12-18', '2024-12-23', '1'),
+(17, 17, 17, '2024-12-19', '2024-12-24', '1'),
+(18, 18, 18, '2024-12-20', '2024-12-25', '1'),
+(19, 19, 19, '2024-12-21', '2024-12-26', '0'),
+(20, 20, 20, '2024-12-22', '2024-12-27', '1'),
+(21, 21, 21, '2024-12-23', '2024-12-28', '0');
 
 -- Volcando estructura para tabla hotel.facturas
 CREATE TABLE IF NOT EXISTS `facturas` (
@@ -123,7 +121,7 @@ CREATE TABLE IF NOT EXISTS `facturas` (
   PRIMARY KEY (`id_factura`),
   KEY `id_reserva` (`id_reserva`),
   CONSTRAINT `facturas_ibfk_1` FOREIGN KEY (`id_reserva`) REFERENCES `reservas` (`id_reserva`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+);
 
 -- Insercion de datos en tabla reservas
 INSERT INTO `facturas` (`id_factura`, `id_reserva`, `estatus_pago`, `descripcion`, `fecha_factura`) VALUES
